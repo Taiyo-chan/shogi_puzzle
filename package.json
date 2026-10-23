@@ -1,0 +1,15 @@
+{
+  "name": "osho-shutujin",
+  "version": "1.0.0",
+  "description": "ブラウザで遊べる将棋スライドパズル「王将出陣」",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "serve": "npx serve ."
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}
