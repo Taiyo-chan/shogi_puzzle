@@ -595,6 +595,7 @@ export class BoardManager {
     }
 
     this.demoSpeedMs = speedMs;
+    this.updateDemoTransition();
     let stepIdx = 0;
     const playNext = () => {
       if (!this.isDemoPlaying) return;
@@ -603,7 +604,7 @@ export class BoardManager {
         // King at (1, 0) -> escape!
         const kingIdx = this.pieces.findIndex(p => p.type === 'king');
         this.executeKingEscape(kingIdx);
-        this.isDemoPlaying = false;
+        this.stopDemo();
         onComplete();
         return;
       }
@@ -624,6 +625,22 @@ export class BoardManager {
 
   setDemoSpeed(speedMs) {
     this.demoSpeedMs = speedMs;
+    this.updateDemoTransition();
+  }
+
+  updateDemoTransition() {
+    if (!this.pieceElements) return;
+    const durSec = Math.max(0.08, Math.min(0.7, (this.demoSpeedMs * 0.55) / 1000));
+    this.pieceElements.forEach(el => {
+      el.style.transition = `left ${durSec}s cubic-bezier(0.2, 0.8, 0.3, 1), top ${durSec}s cubic-bezier(0.2, 0.8, 0.3, 1), transform 0.15s ease, opacity 0.2s`;
+    });
+  }
+
+  restoreDefaultTransition() {
+    if (!this.pieceElements) return;
+    this.pieceElements.forEach(el => {
+      el.style.transition = '';
+    });
   }
 
   stopDemo() {
@@ -632,6 +649,7 @@ export class BoardManager {
       this.demoTimer = null;
     }
     this.isDemoPlaying = false;
+    this.restoreDefaultTransition();
   }
 
   initEvents() {

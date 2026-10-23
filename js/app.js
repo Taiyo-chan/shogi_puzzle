@@ -245,17 +245,19 @@ class App {
     this.dom.demoBar.classList.add('bar-visible');
 
     this.demoSpeeds = [
-      { label: '速度: 1x', ms: 380 },
-      { label: '速度: 2x', ms: 160 },
-      { label: '速度: 4x', ms: 70 }
+      { label: '速度: 0.25x', ms: 1600 },
+      { label: '速度: 0.5x', ms: 800 },
+      { label: '速度: 1x', ms: 400 },
+      { label: '速度: 2x', ms: 180 },
+      { label: '速度: 4x', ms: 80 }
     ];
-    this.currentSpeedIdx = 0;
+    this.currentSpeedIdx = 2; // Default to 1x
     if (this.dom.btnDemoSpeed) {
-      this.dom.btnDemoSpeed.textContent = this.demoSpeeds[0].label;
+      this.dom.btnDemoSpeed.textContent = this.demoSpeeds[this.currentSpeedIdx].label;
     }
 
     this.board.startDemo(
-      this.demoSpeeds[0].ms,
+      this.demoSpeeds[this.currentSpeedIdx].ms,
       ({ current, total }) => {
         this.dom.demoProgress.textContent = `自動出陣再生中: ${current} / ${total} 手`;
       },
